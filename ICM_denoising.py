@@ -11,6 +11,10 @@ def main():
     parser.add_argument("--beta", type = float, default = 1, help = "Value of regularisation")
     args = parser.parse_args()
     sys.stdout.write(str(ICM(args)))
+	
+# potential fonction corresponding to a gaussian markovian model (quadratic function)
++    def pot(fi, fj):
++        return (fi-fj)**2
 
 #ICM : Iterated conditional mode algorithme
 def ICM(args):
@@ -19,12 +23,8 @@ def ICM(args):
 
     sigma2 = 5
     beta = args.beta # regularization parameter 
-    
-	# potential fonction corresponding to a gaussian markovian model (quadratic function)
-    def pot(fi, fj):
-        return (fi-fj)**2
 
-	# Number of iterations : each new image is used as the new restored image
+    # Number of iterations : each new image is used as the new restored image
     for iter in range(args.iter):
         print("iteration {}\n".format(iter+1))
         for i in range(height-1):
@@ -34,7 +34,7 @@ def ICM(args):
                 xmin = 0
                 min = (NoisyIm[i][j]*NoisyIm[i][j])/(2.0*sigma2) + beta*(pot(NoisyIm[i][j-1],0)+pot(NoisyIm[i][j+1],0)+pot(NoisyIm[i-1][j], 0)+pot(NoisyIm[i+1][j], 0))
 
-				#Every shade of gray is tested to find the a local minimum of the energie corresponding to a Gibbs distribution
+		#Every shade of gray is tested to find the a local minimum of the energie corresponding to a Gibbs distribution
                 for x in range(256):
                     proba = ((NoisyIm[i][j]-x)*(NoisyIm[i][j]-x))/(2.0*sigma2) + beta*(pot(NoisyIm[i][j-1],x) + pot(NoisyIm[i][j+1],x) + pot(NoisyIm[i-1][j], x) + pot(NoisyIm[i+1][j], x))
 
