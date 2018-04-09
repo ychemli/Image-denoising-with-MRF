@@ -13,8 +13,8 @@ def main():
     sys.stdout.write(str(ICM(args)))
 	
 # potential fonction corresponding to a gaussian markovian model (quadratic function)
-+    def pot(fi, fj):
-+        return (fi-fj)**2
+def pot(fi, fj):
+    return (fi-fj)**2
 
 #ICM : Iterated conditional mode algorithme
 def ICM(args):
