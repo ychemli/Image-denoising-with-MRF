@@ -4,4 +4,4 @@ This repository contains the implementation of a very short yet powerful algorit
 
 We're using it here for image denoising, where we consider an image x as the realisation of a random field X. 
 
-![](data/iobpng)
+![](data/iob.png)
