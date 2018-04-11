@@ -11,11 +11,11 @@ def main():
     parser.add_argument("--beta", type = float, default = 1, help = "Value of regularisation")
     args = parser.parse_args()
     sys.stdout.write(str(ICM(args)))
-	
+
 # potential fonction corresponding to a gaussian markovian model (quadratic function)
 def pot(fi, fj):
-    return (fi-fj)**2
-
+    return float((fi-fj))**2
+	
 #ICM : Iterated conditional mode algorithme
 def ICM(args):
     NoisyIm = cv2.imread(args.image, 0)
@@ -30,13 +30,13 @@ def ICM(args):
         for i in range(height-1):
             print("line {}/{} ok\n".format(i+1, height))
             for j in range(width-1):
-				# We work in 4-connexity here
+		# We work in 4-connexity here
                 xmin = 0
-                min = (NoisyIm[i][j]*NoisyIm[i][j])/(2.0*sigma2) + beta*(pot(NoisyIm[i][j-1],0)+pot(NoisyIm[i][j+1],0)+pot(NoisyIm[i-1][j], 0)+pot(NoisyIm[i+1][j], 0))
+                min = float((NoisyIm[i][j]*NoisyIm[i][j]))/(2.0*sigma2) + beta*(pot(NoisyIm[i][j-1],0)+pot(NoisyIm[i][j+1],0)+pot(NoisyIm[i-1][j], 0)+pot(NoisyIm[i+1][j], 0))
 
 		#Every shade of gray is tested to find the a local minimum of the energie corresponding to a Gibbs distribution
                 for x in range(256):
-                    proba = ((NoisyIm[i][j]-x)*(NoisyIm[i][j]-x))/(2.0*sigma2) + beta*(pot(NoisyIm[i][j-1],x) + pot(NoisyIm[i][j+1],x) + pot(NoisyIm[i-1][j], x) + pot(NoisyIm[i+1][j], x))
+                    proba = float(((NoisyIm[i][j]-x)*(NoisyIm[i][j]-x)))/(2.0*sigma2) + beta*(pot(NoisyIm[i][j-1],x) + pot(NoisyIm[i][j+1],x) + pot(NoisyIm[i-1][j], x) + pot(NoisyIm[i+1][j], x))
 
                     if(min>proba):
                         min = proba
@@ -48,3 +48,4 @@ def ICM(args):
 
 if __name__ == '__main__':
     main()
+
